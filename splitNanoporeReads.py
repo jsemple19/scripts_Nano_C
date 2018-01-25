@@ -74,7 +74,7 @@ if __name__=='__main__':
     for oldfastq in args.inputFile:
     #oldfastq=args.inputFile
         if ((args.outputFile==None) | (len(args.inputFile)>1)):
-            newfastq=re.sub(".fastq","_split.fastq",oldfastq)
+            newfastq=re.sub("\.fastq$","_split.fastq",oldfastq)
         else:
             newfastq=args.outputFile
         splitNanoporeFastQ(oldfastq,newfastq,minFragLen)
