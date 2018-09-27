@@ -28,7 +28,8 @@ import argparse
 #minFragLen=20
 
 def splitNanoporeFastQ(oldfastq,newfastq,minFragLen):
-    with open(oldfastq, 'r') as oldfq, open(newfastq, 'w') as newfq:
+    with open(oldfastq, 'r') as oldfq, open(newfastq, 'w') as newfq open(seqData,'r') as seqData:
+        seqData.write("readID\treadLength\tfragmentID\tfragmentLength\n")
         while True:
             uniqueID=oldfq.readline()
             if not uniqueID: 
@@ -38,6 +39,7 @@ def splitNanoporeFastQ(oldfastq,newfastq,minFragLen):
             seq=oldfq.readline()
             line3=oldfq.readline()
             qual=oldfq.readline()
+            totalReadLength=len(seq)
             if not qual:
                 break
             starts=[m.start() for m in re.finditer("GATC",seq)]
@@ -45,12 +47,13 @@ def splitNanoporeFastQ(oldfastq,newfastq,minFragLen):
             fragIDbase=re.sub("Basecall_Alignment_template","",uniqueID.split()[0])
             for i in range(len(starts)):
                 end=starts[i]
-                fragID=fragIDbase+"frag"+"{0:0>3}".format(str(i+1))+"_"+str(begin+1)+":"+str(end)
+                fragID=fragIDbase+"_frag"+"{0:0>3}".format(str(i+1))+"_"+str(begin+1)+":"+str(end)
                 if((end-begin)>minFragLen):
                     newfq.write(fragID+"\n")
                     newfq.write(seq[begin:end]+"\n")
                     newfq.write(line3)
                     newfq.write(qual[begin:end]+"\n")
+                seqData.write(fragIDbase+"\t"+str(totalReadLength)+"\t"+fragID+"\t"+str(end-begin+"\n")
                 begin=end
             fragID=fragIDbase+"frag"+"{0:0>3}".format(str(len(starts)+1))+"_"+str(begin+1)+":"+str(len(seq))
             if((len(seq)-begin)>minFragLen):
@@ -77,6 +80,7 @@ if __name__=='__main__':
             newfastq=re.sub("\.fastq$","_split.fastq",oldfastq)
         else:
             newfastq=args.outputFile
+        seqData="./seqData.txt"
         splitNanoporeFastQ(oldfastq,newfastq,minFragLen)
 
     
