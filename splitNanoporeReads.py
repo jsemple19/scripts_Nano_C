@@ -9,12 +9,12 @@ usage:
 1) Process single file,output is stored in input_split.fastq (modification of
 input file name). All fragments shorter than 20 nt (default) are discarded: 
 
-python ./splitNanoporeReads.py.input.fastq
+python ./splitNanoporeReads.py input.fastq
 
 2)Process single file and output is stored in output.fastq (name provided by 
 user).All fragments shorter than 50 nt are discarded:
 
-python ./splitNanoporeReads.py.input.fastq --outputFile output.fastq --minFragLen 50
+python ./splitNanoporeReads.py input.fastq --outputFile output.fastq --minFragLen 50
 
 3) Process multiple files (output file names created by inserting _split before
 .fastq extension. option to give output file names does not work)
