@@ -3,7 +3,7 @@
 # convert sam to bam 
 samtools view -Sb  Meister_RCA1_N2_2_split_no_min_gm.sam >  Meister_RCA1_N2_2_split_no_min_gm.bam
 
-# run pythong script bedFromSplitBam.py with --nsort option in order to sort bam by name (output is _nsorted.bam)
+# run python script bedFromSplitBam.py with --nsort option in order to sort bam by name (output is _nsorted.bam)
 # and process data to output a .bed file
 python bedFromSplitBam.py --nsort Meister_RCA1_N2_2_split_no_min_gm.bam
 
